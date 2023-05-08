@@ -31,5 +31,4 @@ app.get('/fetch', async (req, res) => {
     console.log(list);
     res.send(list)
 })
-
 app.listen(process.env.PORT || 3000)
