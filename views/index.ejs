@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        html {
+            height: 100%
+        }
+
+        body {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            padding: 0 !important;
+            max-height: 75%;
+            max-width: 380px;
+            overflow: scroll;
+        }
+
+        th,
+        td {
+            text-align: center !important;
+        }
+    </style>
+
+</head>
+
+<body class="container">
+    <main>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>TIME</th>
+                    <th>WATER LEVEL</th>
+                    <th>STAGE</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <tr>
+                    <td>now</td>
+                    <td>10m</td>
+                    <td>safe</td>
+                </tr>
+                <tr>
+                    <td>now</td>
+                    <td>10m</td>
+                    <td>safe</td>
+                </tr>
+                <tr>
+                    <td>now</td>
+                    <td>10m</td>
+                    <td>safe</td>
+                </tr>
+                <tr>
+                    <td>now</td>
+                    <td>10m</td>
+                    <td>safe</td>
+                </tr>
+                <tr>
+                    <td>now</td>
+                    <td>10m</td>
+                    <td>safe</td>
+                </tr>
+                <tr>
+                    <td>now</td>
+                    <td>10m</td>
+                    <td>safe</td>
+                </tr>
+                <tr>
+                    <td>now</td>
+                    <td>10m</td>
+                    <td>safe</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script>
+        initialFetch()
+        // setInterval(prependRow, 3000);
+
+        function prependRow(dateTime, waterLevel, condition) {
+            let row = document.createElement("tr")
+            let td1 = document.createElement("td")
+            td1.append(dateTime)
+            let td2 = document.createElement("td")
+            td2.append(waterLevel)
+            let td3 = document.createElement("td")
+            td3.append(condition)
+            row.append(td1, td2, td3)
+            document.getElementById("tbody").prepend(row)
+        }
+
+        async function initialFetch() {
+            let data = await fetch(window.location.href + "fetch").then((response) => response.json())
+            console.log(data);
+            data.results.forEach(datum => {
+                prependRow(datum.key, datum.props.waterLevel,datum.props.condition)
+                console.log(datum.collection);
+                console.log(datum.key);
+                console.log(datum.props.waterLevel);
+                console.log(datum.props.condition);
+            });
+        }
+
+        async function fetchLatest(){
+            
+        }
+
+    </script>
+</body>
+
+</html>
