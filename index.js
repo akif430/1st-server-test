@@ -20,8 +20,19 @@ app.post("/save", async (req, res) => {
         return
     }
 
-    console.log(`Data Received ${req.body}`)
-    console.log(req.body)
+    const date = new Date();
+    console.log(date);
+    
+    if (req.body.waterLevel ){
+        
+    }
+    let result = await wtl.set(date, {
+        waterLevel: req.body.waterLevel,
+        condition: "safe"
+    })
+
+    // console.log(`Data Received ${req.body}`)
+    // console.log(req.body)
     // dateTime
     // water level
     // condition
@@ -31,7 +42,9 @@ app.post("/save", async (req, res) => {
     //         condition: req.body.condition
     //     })
     // }
-    
+
+
+
     // res.send("success");
     res.status(200).json({
         status: 'success'
@@ -43,9 +56,11 @@ app.post("/save", async (req, res) => {
 
 
 app.get('/fetch', async (req, res) => {
-    let list = await wtl.filter({})
-    console.log(list);
-    res.send(list)
-    
+    // let list = await wtl.filter({})
+    // console.log(list);
+    // res.send(list)
+    const date = new Date();
+    console.log(date);
+
 })
 app.listen(process.env.PORT || 3000)
