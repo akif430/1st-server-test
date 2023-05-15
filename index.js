@@ -13,54 +13,30 @@ app.all('/', (req, res) => res.render("index.ejs"))
 
 app.post("/save", async (req, res) => {
 
-    // console.log(req.params)
-
     if (req.body === undefined || req.body === {}) {
         res.status(500)
         return
     }
 
     const date = new Date();
-    console.log(date);
-    
-    if (req.body.waterLevel ){
+    console.log(date.toString());
+
+    // if (req.body.waterLevel ){
         
-    }
-    let result = await wtl.set(date, {
+    // }
+    
+    let result = await wtl.set(date.toString, {
         waterLevel: req.body.waterLevel,
         condition: "safe"
     })
 
-    // console.log(`Data Received ${req.body}`)
-    // console.log(req.body)
-    // dateTime
-    // water level
-    // condition
-    // if (req.body !== undefined){
-    //     let result = await wtl.set(req.body.dateTime, {
-    //         waterLevel: req.body.waterLevel,
-    //         condition: req.body.condition
-    //     })
-    // }
-
-
-
-    // res.send("success");
     res.status(200).json({
         status: 'success'
     });
 })
 
-
-
-
-
 app.get('/fetch', async (req, res) => {
-    // let list = await wtl.filter({})
-    // console.log(list);
-    // res.send(list)
-    const date = new Date();
-    console.log(date);
-
+    let list = await wtl.filter({})
+    res.send(list)
 })
 app.listen(process.env.PORT || 3000)
