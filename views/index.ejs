@@ -65,10 +65,10 @@
     </main>
 
     <script>
+        initialFetch()
         $(document).ready(function () {
             $('#table').DataTable();
         });
-        initialFetch()
 
         function prependRow(dateTime, waterLevel, condition) {
             let row = document.createElement("tr")
@@ -84,7 +84,6 @@
 
         async function initialFetch() {
             let data = await fetch(window.location.href + "fetch").then((response) => response.json())
-            console.log(data);
             data.results.forEach(datum => {
                 prependRow(datum.key, datum.props.waterLevel, datum.props.condition)
                 console.log(datum.collection);
