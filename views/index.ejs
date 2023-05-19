@@ -33,6 +33,10 @@
         td {
             text-align: center !important;
         }
+
+        select option{
+            background-color: var(--background-color);
+        }
     </style>
 
 </head>
@@ -42,39 +46,19 @@
         <table role="grid" id="table">
             <thead>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                <tr>
                     <th>TIME</th>
                     <th>WATER LEVEL</th>
                     <th>STAGE</th>
                 </tr>
             </thead>
-            <tbody id="tbody">
-                <tr>
-                    <td>test</td>
-                    <td>test</td>
-                    <td>test</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>TIME</th>
-                    <th>WATER LEVEL</th>
-                    <th>STAGE</th>
-                </tr>
-            </tfoot>
         </table>
     </main>
 
     <script>
-        initialFetch()
         $(document).ready(function () {
-            $('#table').DataTable();
+            initialFetch()
         });
-
+        
         function prependRow(dateTime, waterLevel, condition) {
             let row = document.createElement("tr")
             let td1 = document.createElement("td")
@@ -89,8 +73,10 @@
 
         async function initialFetch() {
             let data = await fetch(window.location.href + "fetch").then((response) => response.json())
+            let table = $('#table').DataTable();
             data.results.forEach(datum => {
-                prependRow(datum.key, datum.props.waterLevel, datum.props.condition)
+                table.row.add([datum.key, datum.props.waterLevel, datum.props.condition])
+                // prependRow(datum.key, datum.props.waterLevel, datum.props.condition)
             });
         }
     </script>
