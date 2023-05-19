@@ -58,11 +58,10 @@
     </main>
 
     <script>
+        initialFetch()
         $(document).ready(function () {
             $('#table').DataTable();
         });
-        initialFetch()
-        // setInterval(prependRow, 3000);
 
         function prependRow(dateTime, waterLevel, condition) {
             let row = document.createElement("tr")
