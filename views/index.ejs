@@ -42,6 +42,11 @@
         <table role="grid" id="table">
             <thead>
                 <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                <tr>
                     <th>TIME</th>
                     <th>WATER LEVEL</th>
                     <th>STAGE</th>
@@ -86,10 +91,6 @@
             let data = await fetch(window.location.href + "fetch").then((response) => response.json())
             data.results.forEach(datum => {
                 prependRow(datum.key, datum.props.waterLevel, datum.props.condition)
-                console.log(datum.collection);
-                console.log(datum.key);
-                console.log(datum.props.waterLevel);
-                console.log(datum.props.condition);
             });
         }
     </script>
