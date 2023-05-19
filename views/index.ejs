@@ -63,7 +63,8 @@
             let data = await fetch(window.location.href + "fetch").then((response) => response.json())
             let table = $('#table').DataTable();
             data.results.forEach(datum => {
-                console.log(datum);
+                console.log(datum.key);
+                console.log(datum.props);
                 table.row.add([datum.key, datum.props.waterLevel, datum.props.condition])
            });
         }
