@@ -58,26 +58,14 @@
         $(document).ready(function () {
             initialFetch()
         });
-        
-        function prependRow(dateTime, waterLevel, condition) {
-            let row = document.createElement("tr")
-            let td1 = document.createElement("td")
-            td1.append(dateTime)
-            let td2 = document.createElement("td")
-            td2.append(waterLevel)
-            let td3 = document.createElement("td")
-            td3.append(condition)
-            row.append(td1, td2, td3)
-            document.getElementById("tbody").prepend(row)
-        }
 
         async function initialFetch() {
             let data = await fetch(window.location.href + "fetch").then((response) => response.json())
             let table = $('#table').DataTable();
+            console.log(data);
             data.results.forEach(datum => {
                 table.row.add([datum.key, datum.props.waterLevel, datum.props.condition])
-                // prependRow(datum.key, datum.props.waterLevel, datum.props.condition)
-            });
+           });
         }
     </script>
 </body>
