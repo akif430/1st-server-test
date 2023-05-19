@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const moment = require('moment')
 
 process.env.CYCLIC_DB = 'bewildered-galoshes-eelCyclicDB'
 const CyclicDB = require('@cyclic.sh/dynamodb')
@@ -7,9 +8,8 @@ const table = CyclicDB("bewildered-galoshes-eelCyclicDB")
 let wtl = table.collection("waterLevel")
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.set("view engine", "ejs")
-
-app.all('/', (req, res) => res.render("index.ejs"))
 
 app.post("/save", async (req, res) => {
 
@@ -18,14 +18,9 @@ app.post("/save", async (req, res) => {
         return
     }
 
-    const date = new Date();
-    console.log(date.toString());
-
-    // if (req.body.waterLevel ){
-        
-    // }
+    const date = moment().format('YYYY / MM / DD, HH:mm:ss');
     
-    let result = await wtl.set(date.toString, {
+    let result = await wtl.set(date, {
         waterLevel: req.body.waterLevel,
         condition: "safe"
     })
@@ -39,4 +34,10 @@ app.get('/fetch', async (req, res) => {
     let list = await wtl.filter({})
     res.send(list)
 })
+
+// Catch all handler for all other request and direct to main page
+app.use('*', (req, res) => {
+    res.render("index.ejs")
+})
+
 app.listen(process.env.PORT || 3000)

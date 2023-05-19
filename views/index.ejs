@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SKUDAI RIVER WATER LEVEL</title>
+    <link rel="icon" href="https://www.svgrepo.com/show/286392/river.svg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -29,20 +30,24 @@
             overflow: scroll;
         }
 
+        h1 {
+            text-align: center;
+        }
+
         th,
         td {
             text-align: center !important;
         }
 
-        select option{
+        select option {
             background-color: var(--background-color);
         }
     </style>
-
 </head>
 
 <body class="container">
     <main>
+        <h1>SKUDAI RIVER WATER LEVEL PROJECT</h1>
         <table role="grid" id="table">
             <thead>
                 <tr>
@@ -60,11 +65,15 @@
         });
 
         async function initialFetch() {
-            let data = await fetch(window.location.href + "fetch").then((response) => response.json())
-            let table = $('#table').DataTable();
-            data.results.forEach(datum => {
-                table.row.add([datum.key, datum.props.waterLevel, datum.props.condition]).draw(false)
-           });
+            try {
+                let data = await fetch(window.location.href + "fetch").then((response) => response.json())
+                let table = $('#table').DataTable();
+                data.results.forEach(datum => {
+                    table.row.add([datum.key, datum.props.waterLevel, datum.props.condition]).draw(false)
+                });
+            } catch (error) {
+                console.log(error);
+            }
         }
     </script>
 </body>
