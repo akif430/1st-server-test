@@ -54,14 +54,21 @@
                     <td>test</td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <th>TIME</th>
+                    <th>WATER LEVEL</th>
+                    <th>STAGE</th>
+                </tr>
+            </tfoot>
         </table>
     </main>
 
     <script>
-        initialFetch()
         $(document).ready(function () {
             $('#table').DataTable();
         });
+        initialFetch()
 
         function prependRow(dateTime, waterLevel, condition) {
             let row = document.createElement("tr")
@@ -86,11 +93,6 @@
                 console.log(datum.props.condition);
             });
         }
-
-        async function fetchLatest() {
-
-        }
-
     </script>
 </body>
 
