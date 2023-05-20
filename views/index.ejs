@@ -68,14 +68,16 @@
         }
 
         async function initialFetch() {
-            let data = await fetch(window.location.href + "fetch").then((response) => response.json())
-            console.log(data);
-            data.results.forEach(datum => {
-                prependRow(datum.key, datum.props.waterLevel,datum.props.condition)
-                console.log(datum.collection);
-                console.log(datum.key);
-                console.log(datum.props.waterLevel);
-                console.log(datum.props.condition);
+            let data = (await fetch(window.location.href + "fetch").then((response) => response.json())).reverse().slice(0,6).reverse()
+            console.log('NEW DATA', data);
+            data.forEach(datum => {
+                prependRow(datum.Date, datum.waterLevel,datum.condition)
+
+                // prependRow(datum.key, datum.props.waterLevel,datum.props.condition)
+                // console.log(datum.collection);
+                // console.log(datum.key);
+                // console.log(datum.props.waterLevel);
+                // console.log(datum.props.condition);
             });
         }
 
