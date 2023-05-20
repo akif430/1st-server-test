@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 const moment = require('moment')
-
 process.env.CYCLIC_DB = 'bewildered-galoshes-eelCyclicDB'
 const CyclicDB = require('@cyclic.sh/dynamodb')
 const table = CyclicDB("bewildered-galoshes-eelCyclicDB")
