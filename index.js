@@ -1,9 +1,9 @@
 const express = require('express')
 const app = express()
 const moment = require('moment')
-process.env.CYCLIC_DB = 'bewildered-galoshes-eelCyclicDB'
+process.env.CYCLIC_DB = 'real-puce-llama-sariCyclicDB'
 const CyclicDB = require('@cyclic.sh/dynamodb')
-const table = CyclicDB("bewildered-galoshes-eelCyclicDB")
+const table = CyclicDB("real-puce-llama-sariCyclicDB")
 let wtl = table.collection("waterLevel")
 
 app.use(express.json())
