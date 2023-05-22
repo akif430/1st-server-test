@@ -35,6 +35,8 @@
 
         h1 {
             text-align: center;
+            font-size: xx-large;
+            margin-bottom: 0;
         }
 
         th,
@@ -54,7 +56,7 @@
         <table role="grid" id="table">
             <thead>
                 <tr>
-                    <th>TIME</th>
+                    <th style="width: 40%;">TIME</th>
                     <th>WATER LEVEL</th>
                     <th>STAGE</th>
                 </tr>
@@ -69,12 +71,17 @@
 
         async function initialFetch() {
             try {
-                let data = await fetch(window.location.href + "waterLevel/10").then((response) =>response.json())
+                let data = await fetch(window.location.href + "waterLevel/10").then((response) => response.json())
                 let table = $('#table').DataTable({ order: [[0, 'desc']] });
-                console.log(data);
-                data.forEach(datum => {
-                    table.row.add([datum.key, datum.props.waterLevel, datum.props.condition]).draw(false)
-                });
+                console.log(data.results);
+                for (let index = 0; index < data.length; index++) {
+                    if(data.results[index].collection === "$schema")
+                    continue;
+                    table.row.add(
+                        [data.results[index].key,
+                        data.results[index].props.waterLevel,
+                        data.results[index].props.condition]).draw(false)
+                }
             } catch (error) {
                 if (error === 500) {
                     alert("It seems the server is having a problem at the moment. Please be patient and try again later.")
