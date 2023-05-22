@@ -18,14 +18,17 @@
         }
 
         body {
-            height: 100%;
+            min-height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         main {
-            padding: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            padding-right: 5px !important;
+            padding-left: 5px !important;
             max-height: 75%;
             overflow: scroll;
         }
@@ -66,12 +69,20 @@
 
         async function initialFetch() {
             try {
-                let data = await fetch(window.location.href + "fetch").then((response) => response.json())
-                let table = $('#table').DataTable();
+                let data = await fetch(window.location.href + "waterLevel/10").then((response) => {
+                    if(response.status === 500)
+                    throw 500
+                    response.json()
+                })
+                let table = $('#table').DataTable({ order: [[0, 'desc']] });
                 data.results.forEach(datum => {
                     table.row.add([datum.key, datum.props.waterLevel, datum.props.condition]).draw(false)
                 });
             } catch (error) {
+                if (error === 500){
+                    alert("It seems the server is having a problem at the moment. Please be patient and try again later.")
+                    return
+                }
                 console.log(error);
             }
         }
