@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
-const moment = require('moment')
+var moment = require('moment-timezone');
+moment().tz('Asia/Kuala_Lumpur').format();
+
 process.env.CYCLIC_DB = 'real-puce-llama-sariCyclicDB'
 const CyclicDB = require('@cyclic.sh/dynamodb')
 const db = CyclicDB("real-puce-llama-sariCyclicDB")
@@ -17,7 +19,7 @@ app.post("/save", async (req, res) => {
         return
     }
 
-    const date = moment().format('YYYY / MM / DD, HH:mm:ss');
+    const date = moment().tz('Asia/Kuala_Lumpur').format('YYYY / MM / DD, HH:mm:ss');
 
     let result = await wtl.set(date, {
         waterLevel: req.body.waterLevel,
