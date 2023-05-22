@@ -71,10 +71,11 @@
 
         async function initialFetch() {
             try {
-                let data = await fetch(window.location.href + "waterLevel/10").then((response) => response.json())
+                const limit = 10
+                let data = await fetch(window.location.href + "waterLevel/"+limit).then((response) => response.json())
                 let table = $('#table').DataTable({ order: [[0, 'desc']] });
                 console.log(data.results);
-                for (let index = 0; index < data.length; index++) {
+                for (let index = 0; index < limit; index++) {
                     table.row.add(
                         [data.results[index].key,
                         data.results[index].props.waterLevel,
