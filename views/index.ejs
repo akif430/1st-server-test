@@ -75,8 +75,6 @@
                 let table = $('#table').DataTable({ order: [[0, 'desc']] });
                 console.log(data.results);
                 for (let index = 0; index < data.length; index++) {
-                    if(data.results[index].collection === "$schema")
-                    continue;
                     table.row.add(
                         [data.results[index].key,
                         data.results[index].props.waterLevel,

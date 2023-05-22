@@ -39,17 +39,10 @@ app.get('/:col/:limit', async (req, res) => {
         attr_names: undefined
     }
     try {
-        const items = await db.collection(col).parallel_scan(filter, 0, 1, lim + 1)
-        console.log(items);
-        res.json(items).end()
-    } catch (error) {
-        res.sendStatus(500).end()
-    }
-})
-
-app.get('/fetch', async (req, res) => {
-    try {
-        const items = await wtl.filter({})
+        // const items = await db.collection(col).parallel_scan(filter, 0, 1, lim + 1)
+        let items = await db.collection(col).filter({})
+        items.results.sort((a, b) => (a.key < b.key ? 1 : -1))
+        items.results = items.results.slice(0, lim-1)
         console.log(items);
         res.json(items).end()
     } catch (error) {
