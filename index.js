@@ -40,8 +40,7 @@ app.get('/:col/:limit', async (req, res) => {
     }
     try {
         const items = await db.collection(col).parallel_scan(filter, 0, 2, lim + 1)
-        const data = items.results.slice(1)
-        console.log(data);
+        let data = items.results.slice(1)
         res.json(data).end()
     } catch (error) {
         res.sendStatus(500).end()
