@@ -75,7 +75,7 @@
                     response.json()
                 })
                 let table = $('#table').DataTable({ order: [[0, 'desc']] });
-                data.results.forEach(datum => {
+                data.forEach(datum => {
                     table.row.add([datum.key, datum.props.waterLevel, datum.props.condition]).draw(false)
                 });
             } catch (error) {

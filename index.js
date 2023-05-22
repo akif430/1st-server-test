@@ -40,8 +40,7 @@ app.get('/:col/:limit', async (req, res) => {
     }
     try {
         const items = await db.collection(col).parallel_scan(filter, 0, 2, lim + 1)
-        items.results = await items.results.slice(1)
-        res.json(items).end()
+        res.json(items.results.slice(1)).end()
     } catch (error) {
         res.sendStatus(500).end()
     }
@@ -49,7 +48,7 @@ app.get('/:col/:limit', async (req, res) => {
 
 app.get('/fetch', async (req, res) => {
     let list = await wtl.filter({})
-    res.send(list)
+    res.send(list.results)
 })
 
 // Catch all handler for all other request and direct to main page
