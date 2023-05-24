@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <!-- <script src="index.js"></script> -->
     <style>
         html {
             height: 100%
@@ -35,7 +34,7 @@
 
         h1 {
             text-align: center;
-            font-size: xx-large;
+            font-size: x-large;
             margin-bottom: 0;
         }
 
@@ -72,8 +71,11 @@
         async function initialFetch() {
             try {
                 const limit = 10
-                let data = await fetch(window.location.href + "waterLevel/"+limit).then((response) => response.json())
                 let table = $('#table').DataTable({ order: [[0, 'desc']] });
+                
+                //  uncomment block below to request data from db
+                /*
+                let data = await fetch(window.location.href + "waterLevel/"+limit).then((response) => response.json())
                 console.log(data.results);
                 for (let index = 0; index < limit; index++) {
                     table.row.add(
@@ -81,6 +83,21 @@
                         data.results[index].props.waterLevel,
                         data.results[index].props.condition]).draw(false)
                 }
+                */
+
+                // uncomment block below to request data from fs >>
+                // /*
+                let data = await fetch(window.location.href + "fs/"+limit).then((response) => response.json())
+                console.log(data);
+
+                for (let index = 0; index < limit; index++) {
+                    table.row.add(
+                        [data[index].Date,
+                        data[index].waterLevel,
+                        data[index].condition]).draw(false)
+                }
+                // */
+
             } catch (error) {
                 if (error === 500) {
                     alert("It seems the server is having a problem at the moment. Please be patient and try again later.")
