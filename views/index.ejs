@@ -73,8 +73,9 @@
                 const limit = 10
                 let table = $('#table').DataTable({ order: [[0, 'desc']] });
                 
+                //INI UNTUK DB
                 //  uncomment block below to request data from db
-                /*
+                // /*
                 let data = await fetch(window.location.href + "waterLevel/"+limit).then((response) => response.json())
                 console.log(data.results);
                 for (let index = 0; index < limit; index++) {
@@ -83,10 +84,11 @@
                         data.results[index].props.waterLevel,
                         data.results[index].props.condition]).draw(false)
                 }
-                */
-
+                
+                // */
+                //INI UNTUK FS
                 // uncomment block below to request data from fs >>
-                // /*
+                /*
                 let data = await fetch(window.location.href + "fs/"+limit).then((response) => response.json())
                 console.log(data);
 
