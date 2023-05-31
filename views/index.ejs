@@ -41,6 +41,7 @@
         th,
         td {
             text-align: center !important;
+            text-transform: uppercase;
         }
 
         select option {
@@ -57,8 +58,9 @@
                 <tr>
                     <th style="width: 40%;">TIME</th>
                     <th>WATER LEVEL</th>
-                    <!-- <th>WATER TEMPERATURE</th> -->
-                    <th>STAGE</th>
+                    <th>CONDITION</th>
+                    <th>WATER TEMPERATURE</th>
+                    <th>CONDITION</th>
                 </tr>
             </thead>
         </table>
@@ -78,16 +80,19 @@
                 //  uncomment block below to request data from db
                 // /*
                 let data = await fetch(window.location.href + "waterLevel/"+limit).then((response) => response.json())
-                console.log(data.results);
+                console.log(data);
                 for (let index = 0; index < limit; index++) {
                     table.row.add(
-                        [data.results[index].key,
-                        data.results[index].props.waterLevel, // data.results[index].props.waterTemperature,                  //+Temperature
-                        data.results[index].props.condition]).draw(false)
+                        [data.waterLevel.results[index].key,//time
+                        data.waterLevel.results[index].props.waterLevel, //water level reading 
+                        data.waterLevel.results[index].props.condition, //water level condition
+                        data.waterTemperature.results[index].props.waterTemperature, //water temperature reading
+                        data.waterTemperature.results[index].props.condition, //water temperature condition
+                    ]).draw(false)
                 }
                 
                 // */
-                //INI UNTUK FS
+                //INI UNTUK FS (prob)
                 // uncomment block below to request data from fs >>
                 /*
                 let data = await fetch(window.location.href + "fs/"+limit).then((response) => response.json())
@@ -96,7 +101,7 @@
                 for (let index = 0; index < limit; index++) {
                     table.row.add(
                         [data[index].Date,
-                        data[index].waterLevel,  //data[index].waterTemperature                                               //+Temperature
+                        data[index].waterLevel,  //data[index].waterTemperature //+Temperature
                         data[index].condition]).draw(false)
                 }
                 // */
