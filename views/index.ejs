@@ -57,6 +57,7 @@
                 <tr>
                     <th style="width: 40%;">TIME</th>
                     <th>WATER LEVEL</th>
+                    <!-- <th>WATER TEMPERATURE</th> -->
                     <th>STAGE</th>
                 </tr>
             </thead>
@@ -81,7 +82,7 @@
                 for (let index = 0; index < limit; index++) {
                     table.row.add(
                         [data.results[index].key,
-                        data.results[index].props.waterLevel,
+                        data.results[index].props.waterLevel, // data.results[index].props.waterTemperature,                  //+Temperature
                         data.results[index].props.condition]).draw(false)
                 }
                 
@@ -95,7 +96,7 @@
                 for (let index = 0; index < limit; index++) {
                     table.row.add(
                         [data[index].Date,
-                        data[index].waterLevel,
+                        data[index].waterLevel,  //data[index].waterTemperature                                               //+Temperature
                         data[index].condition]).draw(false)
                 }
                 // */

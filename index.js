@@ -6,10 +6,19 @@ app.set("view engine", "ejs")
 const moment = require('moment-timezone');
 const {initData, loadData, saveData} = require('./filesystem.js')
 
+const WaterLevelWarning = 0.5;
+const WaterLevelDanger = 0.2;
+
+const WaterTemperatureWarningCold = 10;
+const WaterTemperatureWarningHot = 40;
+
+
+
 process.env.CYCLIC_DB = 'real-puce-llama-sariCyclicDB'
 const CyclicDB = require('@cyclic.sh/dynamodb')
 const db = CyclicDB("real-puce-llama-sariCyclicDB")
 let wtl = db.collection("waterLevel")
+let wtemp = db.collection("waterTemperature")                                                         //+Temperature
 
 let dataItemArr = initData()
 
@@ -21,7 +30,7 @@ app.post('/savefs', async (req,res) => {
 
     const date = new Date().toLocaleString('en-ES');
     console.log(`New ${date}`);
-    dataItemArr.push({waterLevel:req.body.waterLevel, Date:date, condition:"safe"})
+    dataItemArr.push({waterLevel:req.body.waterLevel,Date:date, condition:"safe"})                    //+Temperature //waterTemperature:req.body.waterTemperature,
     console.log(dataItemArr);
     saveData(dataItemArr)
     res.status(200).json({
@@ -38,11 +47,39 @@ app.post('/save', async (req, res) => {
     let result = await wtl.set(date, {
         waterLevel: req.body.waterLevel,
         condition: "safe"
+                                                                                                                    
     })
     res.status(200).json({
         status: 'success'
     });
 })
+
+
+//waterTemperature: req.body.waterTemperature,                                                                                                  //+Temperature
+//UNTUK TEMPERATURE 
+
+app.post('/saveTemperature', async (req, res) => {
+    if (req.body === undefined || req.body === {}) {
+        res.status(500)
+        return
+    }
+    const date = moment().tz('Asia/Kuala_Lumpur').format('YYYY / MM / DD, HH:mm:ss');
+    let result = await wtemp.set(date, {
+        waterTemperature: req.body.waterTemperature,
+
+    })
+    res.status(200).json({
+        status: 'success'
+    });
+})
+
+
+
+
+
+
+
+
 
 app.get('/fs/:lim',async (req,res)=>{
     const lim = req.params.lim
