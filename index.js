@@ -14,8 +14,7 @@ const WaterLevelDanger = 0.2;
 const WaterTemperatureWarningCold = 10;
 const WaterTemperatureWarningHot = 40;
 
-
-
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 process.env.CYCLIC_DB = 'real-puce-llama-sariCyclicDB'
 const CyclicDB = require('@cyclic.sh/dynamodb')
 const db = CyclicDB("real-puce-llama-sariCyclicDB")
@@ -64,7 +63,7 @@ app.post('/save', async (req, res) => {
 })
 
 //waterTemperature: req.body.waterTemperature,                                                                                                  //+Temperature
-//UNTUK TEMPERATURE 
+//UNTUK TEMPERATURE
 
 app.post('/saveTemperature', async (req, res) => {
     if (req.body === undefined || req.body === {}) {
@@ -85,10 +84,6 @@ app.post('/saveTemperature', async (req, res) => {
         status: 'success'
     });
 })
-
-
-
-
 
 app.get('/fs/:lim', async (req, res) => {
     const lim = req.params.lim
