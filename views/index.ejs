@@ -83,11 +83,11 @@
                 console.log(data);
                 for (let index = 0; index < limit; index++) {
                     table.row.add(
-                        [data.waterLevel?.results[index].key ,//time
-                        data.waterLevel?.results[index].props.waterLevel, //water level reading 
-                        data.waterLevel?.results[index].props.condition, //water level condition
-                        data.waterTemperature?.results[index].props.waterTemperature, //water temperature reading
-                        data.waterTemperature?.results[index].props.condition, //water temperature condition
+                        [data.waterLevel.results[index].key ,//time
+                        data.waterLevel.results[index].props.waterLevel, //water level reading 
+                        data.waterLevel.results[index].props.condition, //water level condition
+                        data.waterTemperature.results[index].props.waterTemperature, //water temperature reading
+                        data.waterTemperature.results[index].props.condition, //water temperature condition
                     ]).draw(false)
                 }
                 
