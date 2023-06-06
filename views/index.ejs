@@ -47,6 +47,18 @@
         select option {
             background-color: var(--background-color);
         }
+
+        .normal {
+            color: lightgreen;
+        }
+
+        .warning {
+            color: rgba(255, 255, 0, 0.8);
+        }
+
+        .danger {
+            color: lightcoral
+        }
     </style>
 </head>
 
@@ -75,22 +87,28 @@
             try {
                 const limit = 10
                 let table = $('#table').DataTable({ order: [[0, 'desc']] });
-                
+
                 //INI UNTUK DB
                 //  uncomment block below to request data from db
                 // /*
+
                 let data = await fetch(window.location.href + "waterLevel/"+limit).then((response) => response.json())
                 console.log(data);
                 for (let index = 0; index < limit; index++) {
-                    table.row.add(
+                    let row = table.row.add(
                         [data.waterLevel.results[index].key ,//time
                         data.waterLevel.results[index].props.waterLevel, //water level reading 
                         data.waterLevel.results[index].props.condition, //water level condition
                         data.waterTemperature.results[index].props.waterTemperature, //water temperature reading
                         data.waterTemperature.results[index].props.condition, //water temperature condition
-                    ]).draw(false)
-                }
+                    ]).draw(false).node()
                 
+                //cell ke 3
+                $(row).children()[2].className =  data.waterLevel.results[index].props.condition
+                //cell ke 5
+                $(row).children()[4].className = data.waterTemperature.results[index].props.condition
+                }
+
                 // */
                 //INI UNTUK FS (prob)
                 // uncomment block below to request data from fs >>
@@ -105,7 +123,6 @@
                         data[index].condition]).draw(false)
                 }
                 // */
-
             } catch (error) {
                 if (error === 500) {
                     alert("It seems the server is having a problem at the moment. Please be patient and try again later.")
