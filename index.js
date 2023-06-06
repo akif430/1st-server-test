@@ -6,10 +6,19 @@ app.set("view engine", "ejs")
 const moment = require('moment-timezone');
 const { initData, loadData, saveData } = require('./filesystem.js')
 
-//water level hit warning if below 0.5
-const WaterLevelWarning = 0.5;
-//water level hit danger if below 0.2
-const WaterLevelDanger = 0.2;
+//normal  = 2.00
+//alert  = 1.50
+//warning = 1.00
+//danger 0.50
+
+//water level hit alert if below 1.50
+const WaterLevelAlert = 1.5;
+
+//water level hit warning if below 1.0
+const WaterLevelWarning = 1.0;
+
+//water level hit danger if below 0.5
+const WaterLevelDanger = 0.5;
 
 const WaterTemperatureWarningCold = 10;
 const WaterTemperatureWarningHot = 40;
@@ -45,8 +54,11 @@ app.post('/save', async (req, res) => {
         return
     }
     //condition statement
+
     let condition = 'normal'
-    if(req.body.waterLevel <= WaterLevelWarning && req.body.waterLevel >  WaterLevelDanger){
+    if(req.body.waterLevel <= WaterLevelAlert && req.body.WaterLevel > WaterLevelWarning) {
+        condition = 'alert'
+    }else(req.body.waterLevel <= WaterLevelWarning && req.body.waterLevel >  WaterLevelDanger){
         condition = 'warning'
     }else if(req.body.waterLevel <=  WaterLevelDanger){
         condition = 'danger'
@@ -70,6 +82,7 @@ app.post('/saveTemperature', async (req, res) => {
         res.status(500)
         return
     }
+
     let condition = 'danger'
     if (req.body.waterTemperature > WaterTemperatureWarningCold && req.body.waterTemperature < WaterTemperatureWarningHot) {
         condition = 'normal'
