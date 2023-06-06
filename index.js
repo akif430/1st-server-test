@@ -56,11 +56,17 @@ app.post('/save', async (req, res) => {
     //condition statement
 
     let condition = 'normal'
-    if(req.body.waterLevel <= WaterLevelAlert && req.body.WaterLevel > WaterLevelWarning) {
+    if(req.body.waterLevel <= WaterLevelAlert && req.body.WaterLevel > WaterLevelWarning) 
+    {
         condition = 'alert'
-    }else(req.body.waterLevel <= WaterLevelWarning && req.body.waterLevel >  WaterLevelDanger){
+    }
+    else if(req.body.waterLevel <= WaterLevelWarning && req.body.waterLevel >  WaterLevelDanger) 
+    {
         condition = 'warning'
-    }else if(req.body.waterLevel <=  WaterLevelDanger){
+    }
+
+    else if(req.body.waterLevel <=  WaterLevelDanger)
+    {
         condition = 'danger'
     }
 
