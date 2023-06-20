@@ -128,9 +128,9 @@
                 <tfoot>
                     <tr>
                         <th style="width: 40%;">AVERAGE</th>
-                        <th id='averageWaterLevel'>WATER LEVEL</th>
+                        <th id='averageWaterLevel'></th>
                         <th></th>
-                        <th id='averageWaterTemperature'>WATER TEMPERATURE</th>
+                        <th id='averageWaterTemperature'></th>
                         <th></th>
                     </tr>
                 </tfoot>
@@ -191,7 +191,8 @@
                 // /*
                 
                 let data = await fetch(window.location.href + "waterLevel/" + limit).then((response) => response.json())
-                for (let index = 0; index < limit; index++) {
+                let loop = data.waterLevel.results.length
+                for (let index = 0; index < loop; index++) {
                     let row = table.row.add(
                         [data.waterLevel.results[index].key,//time
                         data.waterLevel.results[index].props.waterLevel, //water level reading 
