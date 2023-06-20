@@ -124,7 +124,7 @@ app.post('/saveTemperature', async (req, res) => {
 app.delete('/delete/:col', async (req, res) => {
     const col = req.params.col
     const key = req.body.key
-    let result = await db.collection(col).delete(req.body.key, {},{})
+    let result = await db.collection(col).delete(req.body.key)
     if(result){
         res.status(200).json({
             status: 'success'
