@@ -6,19 +6,31 @@ app.set("view engine", "ejs")
 const moment = require('moment-timezone');
 const { initData, loadData, saveData } = require('./filesystem.js')
 
-//normal  = 2.00
-//alert  = 1.50
-//warning = 1.00
-//danger 0.50
+//normal  = 0.5 ke bawah
+//alert  = 0.5 - 1.0 
+//warning = 1.0 - 1.5
+//danger = lebih 1.5
 
-//water level hit alert if below 1.50
-const WaterLevelAlert = 1.5;
+//water level hit alert if more than 0.5
+const TrueWaterLevelAlert = 0.5;
 
-//water level hit warning if below 1.0
-const WaterLevelWarning = 1.0;
+//water level hit warning if more than 1.0
+const TrueWaterLevelWarning = 1.0;
 
-//water level hit danger if below 0.5
-const WaterLevelDanger = 0.5;
+//water level hit danger if more than 1.5
+const TrueWaterLevelDanger = 1.5;
+
+//Determine the River Depth (Make Measurement)
+const RiverDepth = 0.3;
+
+//Determine the Height of sensor above River Bank 
+const SensorDistFromRiverBank = 1.0;
+
+//Formula 
+//  TruewaterLevel = RiverDepth + WaterLevel (fromsensor) - SensorDistFromRiverBank 
+
+
+
 
 const WaterTemperatureWarningCold = 10;
 const WaterTemperatureWarningHot = 40;
@@ -54,25 +66,30 @@ app.post('/save', async (req, res) => {
         return
     }
     //condition statement
+    let TrueWaterLevel = RiverDepth + Number(req.body.WaterLevel)- SensorDistFromRiverBank
 
-    let condition = 'normal'
-    if(req.body.waterLevel <= WaterLevelAlert && req.body.WaterLevel > WaterLevelWarning) 
+    let condition 
+    if(TrueWaterLevel < TrueWaterLevelAlert ) 
+    {
+        condition = 'normal'
+    }
+    else if(TrueWaterLevel < TrueWaterLevelWarning) 
     {
         condition = 'alert'
     }
-    else if(req.body.waterLevel <= WaterLevelWarning && req.body.waterLevel >  WaterLevelDanger) 
+
+    else if(TrueWaterLevel <  TrueWaterLevelDanger)
     {
         condition = 'warning'
     }
-
-    else if(req.body.waterLevel <=  WaterLevelDanger)
+    else
     {
         condition = 'danger'
     }
 
     const date = moment().tz('Asia/Kuala_Lumpur').format('YYYY / MM / DD, HH:mm:ss');
     let result = await wtl.set(date, {
-        waterLevel: req.body.waterLevel,
+        waterLevel: TrueWaterLevel,
         condition
     })
     res.status(200).json({
