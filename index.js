@@ -90,7 +90,7 @@ app.post('/save', async (req, res) => {
 
     const date = moment().tz('Asia/Kuala_Lumpur').format('YYYY / MM / DD, HH:mm:ss');
     let result = await wtl.set(date, {
-        waterLevel: TrueWaterLevel,
+        waterLevel: TrueWaterLevel.toFixed(2),
         condition
     })
     res.status(200).json({
