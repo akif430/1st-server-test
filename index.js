@@ -62,9 +62,9 @@ app.post('/savefs', async (req, res) => {
 })
 
 app.post('/save', async (req, res) => {
-    if (req.body === undefined || req.body === {} || !req.body.WaterLevel) {
+    if (req.body === undefined || req.body === {} || !req.body.WaterLevel || isNaN(req.body.WaterLevel)) {
         res.status(400).json({
-            status: 'request body is either undefined, empty or does not have `WaterLevel` key'
+            status: 'request body is either undefined, empty, does not have `WaterLevel` key or not a number.'
         });
         return 
     }
@@ -99,9 +99,9 @@ app.post('/save', async (req, res) => {
 //UNTUK TEMPERATURE
 
 app.post('/saveTemperature', async (req, res) => {
-    if (req.body === undefined || req.body === {} || !req.body.waterTemperature) {
+    if (req.body === undefined || req.body === {} || !req.body.waterTemperature || isNaN(req.body.waterTemperature)) {
         res.status(400).json({
-            status: 'request body is either undefined, empty or does not have `waterTemperature` key'
+            status: 'request body is either undefined, empty, does not have `waterTemperature` key or not a number'
         });
         return 
     }
