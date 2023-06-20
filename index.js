@@ -11,6 +11,10 @@ const { initData, loadData, saveData } = require('./filesystem.js')
 //warning = 1.0 - 1.5
 //danger = lebih 1.5
 
+
+//nanti kena tukar sini lepas ukur Depth of river kat FKM 
+
+
 //water level hit alert if more than 0.5
 const TrueWaterLevelAlert = 0.5;
 
