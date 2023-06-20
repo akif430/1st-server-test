@@ -34,18 +34,55 @@
 
         h1 {
             text-align: center;
-            font-size: x-large;
+            font-size: medium;
             margin-bottom: 0;
+        }
+
+        article{
+            border-radius: 15px;
+        }
+        #table {
+            font-size: small;
         }
 
         th,
         td {
+            font-size: small;
             text-align: center !important;
             text-transform: uppercase;
         }
 
         select option {
             background-color: var(--background-color);
+        }
+
+        #explanation {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 40px;
+        }
+
+        figure {
+            min-width: 300px;
+            max-width: 600px;
+            margin-bottom: 0;
+        }
+
+        figure>img {
+            aspect-ratio: 2/1;
+            height: auto;
+        }
+
+        figcaption {
+            text-align: center;
+        }
+
+        @media only screen and (min-width: 800px) {
+            #explanation {
+                flex-wrap: nowrap;
+                gap: 20px;
+            }
         }
 
         .normal {
@@ -65,25 +102,66 @@
         }
 
         .indicator {
-      color: rgb(75, 75, 230);
-    }
+            color: rgb(75, 75, 230);
+        }
     </style>
 </head>
 
-<body class="container">
-    <main>
+<body>
+    <main class="container">
         <h1>SKUDAI RIVER WATER MONITORING</h1>
-        <table role="grid" id="table">
-            <thead>
-                <tr>
-                    <th style="width: 40%;">TIME</th>
-                    <th>WATER LEVEL</th>
-                    <th>CONDITION</th>
-                    <th>WATER TEMPERATURE</th>
-                    <th>CONDITION</th>
-                </tr>
-            </thead>
-        </table>
+        <article>
+            <table role="grid" id="table">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">TIME</th>
+                        <th>WATER LEVEL</th>
+                        <th>CONDITION</th>
+                        <th>WATER TEMPERATURE</th>
+                        <th>CONDITION</th>
+                    </tr>
+                </thead>
+            </table>
+        </article>
+        <article id="explanation">
+            <figure>
+                <img src="/public/images/wtl.png" alt="water level threshold">
+                <figcaption>
+                        <small>
+                        Kementerian dan Sumber Asli, Alam Sekitar dan Perubahan Iklim, Aras Amaran Stesen Aras Air, <a
+                            href="https://publicinfobanjir.water.gov.my/wp-content/themes/enlighten/images/wlT.png">https://publicinfobanjir.water.gov.my/wp-content/themes/enlighten/images/wlT.png
+                        </a>
+                    </small>
+                </figcaption>
+            </figure>
+            <div>
+                <small>
+                    <span class='danger'>
+                        Danger Level
+                    </span>
+                    <p>
+                        Aras air sungai mula melimpah dan boleh menyebabkan banjir. Perpindahan perlu dilaksanakan jika
+                        perlu.
+                    </p>
+                </small>
+                <small>
+                    <span class='warning'>
+                        Warning Level
+                    </span>
+                    <p>
+                        Aras air sungai menghampiri aras banjir & bersedia untuk buat perpindahan jika perlu.
+                    </p>
+                </small>
+                <small>
+                    <span class='alert'>
+                        Alert Level
+                    </span>
+                    <p>
+                        Aras air sungai mula meningkat dari Aras Normal.
+                    </p>
+                </small>
+            </div>
+        </article>
     </main>
 
     <script>
@@ -100,21 +178,21 @@
                 //  uncomment block below to request data from db
                 // /*
 
-                let data = await fetch(window.location.href + "waterLevel/"+limit).then((response) => response.json())
+                let data = await fetch(window.location.href + "waterLevel/" + limit).then((response) => response.json())
                 console.log(data);
                 for (let index = 0; index < limit; index++) {
                     let row = table.row.add(
-                        [data.waterLevel.results[index].key ,//time
+                        [data.waterLevel.results[index].key,//time
                         data.waterLevel.results[index].props.waterLevel, //water level reading 
                         data.waterLevel.results[index].props.condition, //water level condition
                         data.waterTemperature.results[index].props.waterTemperature, //water temperature reading
                         data.waterTemperature.results[index].props.condition, //water temperature condition
-                    ]).draw(false).node()
-                
-                //cell ke 3
-                $(row).children()[2].className =  data.waterLevel.results[index].props.condition
-                //cell ke 5
-                $(row).children()[4].className = data.waterTemperature.results[index].props.condition
+                        ]).draw(false).node()
+
+                    //cell ke 3
+                    $(row).children()[2].className = data.waterLevel.results[index].props.condition
+                    //cell ke 5
+                    $(row).children()[4].className = data.waterTemperature.results[index].props.condition
                 }
 
                 // */

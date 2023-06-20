@@ -36,7 +36,7 @@ const WaterTemperatureWarningCold = 10;
 const WaterTemperatureWarningHot = 40;
 
 //process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
-https://vast-blue-starfish-cap.cyclic.app/
+// https://vast-blue-starfish-cap.cyclic.app/
 process.env.CYCLIC_DB = 'vast-blue-starfish-capCyclicDB'
 const CyclicDB = require('@cyclic.sh/dynamodb')
 const db = CyclicDB("vast-blue-starfish-capCyclicDB")
@@ -44,7 +44,7 @@ let wtl = db.collection("waterLevel")
 let wtemp = db.collection("waterTemperature")                                                         //+Temperature
 
 let dataItemArr = initData()
-
+app.use('/public/images/', express.static('./public/images'));
 app.post('/savefs', async (req, res) => {
     if (req.body === undefined || req.body === {}) {
         res.status(500)
