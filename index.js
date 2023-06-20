@@ -36,9 +36,10 @@ const WaterTemperatureWarningCold = 10;
 const WaterTemperatureWarningHot = 40;
 
 //process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
-process.env.CYCLIC_DB = 'real-puce-llama-sariCyclicDB'
+https://vast-blue-starfish-cap.cyclic.app/
+process.env.CYCLIC_DB = 'vast-blue-starfish-capCyclicDB'
 const CyclicDB = require('@cyclic.sh/dynamodb')
-const db = CyclicDB("real-puce-llama-sariCyclicDB")
+const db = CyclicDB("vast-blue-starfish-capCyclicDB")
 let wtl = db.collection("waterLevel")
 let wtemp = db.collection("waterTemperature")                                                         //+Temperature
 
