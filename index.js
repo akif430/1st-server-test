@@ -66,7 +66,7 @@ app.post('/save', async (req, res) => {
         res.status(400).json({
             status: 'request body is either undefined, empty, does not have `WaterLevel` key or not a number.'
         });
-        return 
+        return
     }
     //condition statement
     let TrueWaterLevel = RiverDepth + Number(req.body.WaterLevel) - SensorDistFromRiverBank
@@ -103,7 +103,7 @@ app.post('/saveTemperature', async (req, res) => {
         res.status(400).json({
             status: 'request body is either undefined, empty, does not have `waterTemperature` key or not a number'
         });
-        return 
+        return
     }
 
     let condition = 'danger'
@@ -119,6 +119,24 @@ app.post('/saveTemperature', async (req, res) => {
     res.status(200).json({
         status: 'success'
     });
+})
+
+app.delete('/delete/:col', async (req, res) => {
+    const col = req.params.col
+    const key = req.body.key
+    let result = await db.collection(col).delete(req.body.key, {},{})
+    if(result){
+        res.status(200).json({
+            status: 'success'
+        });
+        return
+    }else{
+        res.status(400).json({
+            key,
+            status: 'key may be wrong'
+        });
+        return 
+    }
 })
 
 app.get('/fs/:lim', async (req, res) => {
