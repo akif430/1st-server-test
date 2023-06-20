@@ -62,35 +62,32 @@ app.post('/savefs', async (req, res) => {
 })
 
 app.post('/save', async (req, res) => {
-    if (req.body === undefined || req.body === {}) {
-        res.status(500)
-        return
+    if (req.body === undefined || req.body === {} || !req.body.WaterLevel) {
+        res.status(400).json({
+            status: 'request body is either undefined, empty or does not have `WaterLevel` key'
+        });
+        return 
     }
     //condition statement
-    let TrueWaterLevel = RiverDepth + Number(req.body.WaterLevel)- SensorDistFromRiverBank
+    let TrueWaterLevel = RiverDepth + Number(req.body.WaterLevel) - SensorDistFromRiverBank
 
-    let condition 
-    if(TrueWaterLevel < TrueWaterLevelAlert ) 
-    {
+    let condition
+    if (TrueWaterLevel < TrueWaterLevelAlert) {
         condition = 'normal'
     }
-    else if(TrueWaterLevel < TrueWaterLevelWarning) 
-    {
+    else if (TrueWaterLevel < TrueWaterLevelWarning) {
         condition = 'alert'
     }
-
-    else if(TrueWaterLevel <  TrueWaterLevelDanger)
-    {
+    else if (TrueWaterLevel < TrueWaterLevelDanger) {
         condition = 'warning'
     }
-    else
-    {
+    else {
         condition = 'danger'
     }
 
     const date = moment().tz('Asia/Kuala_Lumpur').format('YYYY / MM / DD, HH:mm:ss');
     let result = await wtl.set(date, {
-        waterLevel: TrueWaterLevel.toFixed(2),
+        waterLevel: Number(TrueWaterLevel.toFixed(2)),
         condition
     })
     res.status(200).json({
@@ -102,19 +99,21 @@ app.post('/save', async (req, res) => {
 //UNTUK TEMPERATURE
 
 app.post('/saveTemperature', async (req, res) => {
-    if (req.body === undefined || req.body === {}) {
-        res.status(500)
-        return
+    if (req.body === undefined || req.body === {} || !req.body.waterTemperature) {
+        res.status(400).json({
+            status: 'request body is either undefined, empty or does not have `waterTemperature` key'
+        });
+        return 
     }
 
     let condition = 'danger'
     if (req.body.waterTemperature > WaterTemperatureWarningCold && req.body.waterTemperature < WaterTemperatureWarningHot) {
         condition = 'normal'
     }
-    
+
     const date = moment().tz('Asia/Kuala_Lumpur').format('YYYY / MM / DD, HH:mm:ss');
     let result = await wtemp.set(date, {
-        waterTemperature: req.body.waterTemperature,
+        waterTemperature: Number(req.body.waterTemperature.toFixed(2)),
         condition
     })
     res.status(200).json({
@@ -150,8 +149,8 @@ app.get('/:col/:limit', async (req, res) => {
         let waterTemperature = await db.collection('waterTemperature').filter({})
         waterTemperature.results.sort((a, b) => (a.key < b.key ? 1 : -1))
         waterTemperature.results = waterTemperature.results.slice(0, lim)
-          
-        res.json({waterLevel , waterTemperature}).end()
+
+        res.json({ waterLevel, waterTemperature }).end()
 
     } catch (error) {
         res.sendStatus(500).end()
