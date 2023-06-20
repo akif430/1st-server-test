@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SKUDAI RIVER WATER LEVEL</title>
+    <title>Skudai River Water Level</title>
     <link rel="icon" href="https://www.svgrepo.com/show/286392/river.svg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
@@ -24,8 +24,6 @@
         }
 
         main {
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
             padding-right: 5px !important;
             padding-left: 5px !important;
             max-height: 75%;
@@ -39,7 +37,8 @@
         }
 
         article{
-            border-radius: 15px;
+            border-radius: 10px;
+            padding: 40px;
         }
         #table {
             font-size: small;
@@ -64,7 +63,6 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
-            padding: 40px;
         }
 
         figure {
@@ -72,10 +70,11 @@
             max-width: 600px;
             margin-bottom: 0;
         }
-
+        
         figure>img {
             aspect-ratio: 2/1;
             height: auto;
+            border-radius: 8px;
         }
 
         figcaption {
@@ -94,15 +93,16 @@
         }
 
         .alert {
-            color: rgb(255, 247, 0);
+            color: rgb(210, 204, 14);
         }
 
         .warning {
-            color: rgba(255, 139, 50, 0.8);
+            color: rgba(237, 117, 24, 0.8);
         }
 
         .danger {
-            color: rgb(255, 0, 0)
+            /* color: var(--del-color); */
+            color: rgb(255, 56, 56);
         }
 
         .indicator {
