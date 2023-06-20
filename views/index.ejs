@@ -200,7 +200,7 @@
                 // /*
 
                 let data = await fetch(window.location.href + "waterLevel/" + limit).then((response) => response.json())
-                let loop = data.waterLevel.results.length
+                let loop = Math.min(data.waterLevel.results.length, data.waterTemperature.results.length)
                 for (let index = 0; index < loop; index++) {
                     let row = table.row.add(
                         [data.waterLevel.results[index].key,//time
