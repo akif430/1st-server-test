@@ -45,6 +45,10 @@
             font-size: small;
         }
 
+        tfoot{
+            background-color: var(--primary-focus);
+        }
+
         th,
         td {
             font-size: small;
@@ -121,6 +125,15 @@
                         <th>CONDITION</th>
                     </tr>
                 </thead>
+                <tfoot>
+                    <tr>
+                        <th style="width: 40%;">AVERAGE</th>
+                        <th id='averageWaterLevel'>WATER LEVEL</th>
+                        <th></th>
+                        <th id='averageWaterTemperature'>WATER TEMPERATURE</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
             </table>
         </article>
         <article id="explanation">
@@ -173,13 +186,11 @@
             try {
                 const limit = 10
                 let table = $('#table').DataTable({ order: [[0, 'desc']] });
-
                 //INI UNTUK DB
                 //  uncomment block below to request data from db
                 // /*
-
+                
                 let data = await fetch(window.location.href + "waterLevel/" + limit).then((response) => response.json())
-                console.log(data);
                 for (let index = 0; index < limit; index++) {
                     let row = table.row.add(
                         [data.waterLevel.results[index].key,//time
@@ -187,14 +198,23 @@
                         data.waterLevel.results[index].props.condition, //water level condition
                         data.waterTemperature.results[index].props.waterTemperature, //water temperature reading
                         data.waterTemperature.results[index].props.condition, //water temperature condition
-                        ]).draw(false).node()
-
+                    ]).draw(false).node()
+                    
                     //cell ke 3
                     $(row).children()[2].className = data.waterLevel.results[index].props.condition
                     //cell ke 5
                     $(row).children()[4].className = data.waterTemperature.results[index].props.condition
                 }
-
+                
+                let arrWaterLevel = table.column(1).data()
+                let averageWaterLevel = Number((arrWaterLevel.reduce((a,b) => a + b, 0) / arrWaterLevel.length).toFixed(2))
+                document.getElementById('averageWaterLevel').innerText = averageWaterLevel
+                
+                let arrWaterTemperature = table.column(3).data()
+                let averageWaterTemperature = Number((arrWaterTemperature.reduce((a,b) => a + b, 0) / arrWaterTemperature.length).toFixed(2))
+                document.getElementById('averageWaterTemperature').innerText = averageWaterTemperature
+                
+                
                 // */
                 //INI UNTUK FS (prob)
                 // uncomment block below to request data from fs >>
