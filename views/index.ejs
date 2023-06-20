@@ -24,9 +24,6 @@
         }
 
         main {
-            padding-right: 5px !important;
-            padding-left: 5px !important;
-            max-height: 75%;
             overflow: scroll;
         }
 
@@ -36,15 +33,18 @@
             margin-bottom: 0;
         }
 
-        article{
+        article {
             border-radius: 10px;
-            padding: 40px;
+            padding-top: 40px;
+            padding-bottom: 40px;
         }
-        #table {
+
+        #table_wrapper {
+            padding-inline: 5px;
             font-size: small;
         }
 
-        tfoot{
+        tfoot {
             background-color: var(--primary-focus);
         }
 
@@ -53,6 +53,7 @@
             font-size: small;
             text-align: center !important;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         select option {
@@ -70,7 +71,7 @@
             max-width: 600px;
             margin-bottom: 0;
         }
-        
+
         figure>img {
             aspect-ratio: 2/1;
             height: auto;
@@ -88,6 +89,15 @@
             }
         }
 
+        @media only screen and (max-width: 995px) {
+            #table_wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                overflow-x: scroll;
+            }
+        }
+
         .normal {
             color: lightgreen;
         }
@@ -101,7 +111,6 @@
         }
 
         .danger {
-            /* color: var(--del-color); */
             color: rgb(255, 56, 56);
         }
 
@@ -118,7 +127,7 @@
             <table role="grid" id="table">
                 <thead>
                     <tr>
-                        <th style="width: 40%;">TIME</th>
+                        <th>TIME</th>
                         <th>WATER LEVEL</th>
                         <th>CONDITION</th>
                         <th>WATER TEMPERATURE</th>
@@ -140,7 +149,7 @@
             <figure>
                 <img src="/public/images/wtl.png" alt="water level threshold">
                 <figcaption>
-                        <small>
+                    <small>
                         Kementerian dan Sumber Asli, Alam Sekitar dan Perubahan Iklim, Aras Amaran Stesen Aras Air, <a
                             href="https://publicinfobanjir.water.gov.my/wp-content/themes/enlighten/images/wlT.png">https://publicinfobanjir.water.gov.my/wp-content/themes/enlighten/images/wlT.png
                         </a>
@@ -189,7 +198,7 @@
                 //INI UNTUK DB
                 //  uncomment block below to request data from db
                 // /*
-                
+
                 let data = await fetch(window.location.href + "waterLevel/" + limit).then((response) => response.json())
                 let loop = data.waterLevel.results.length
                 for (let index = 0; index < loop; index++) {
@@ -199,23 +208,23 @@
                         data.waterLevel.results[index].props.condition, //water level condition
                         data.waterTemperature.results[index].props.waterTemperature, //water temperature reading
                         data.waterTemperature.results[index].props.condition, //water temperature condition
-                    ]).draw(false).node()
-                    
+                        ]).draw(false).node()
+
                     //cell ke 3
                     $(row).children()[2].className = data.waterLevel.results[index].props.condition
                     //cell ke 5
                     $(row).children()[4].className = data.waterTemperature.results[index].props.condition
                 }
-                
+
                 let arrWaterLevel = table.column(1).data()
-                let averageWaterLevel = Number((arrWaterLevel.reduce((a,b) => a + b, 0) / arrWaterLevel.length).toFixed(2))
+                let averageWaterLevel = Number((arrWaterLevel.reduce((a, b) => a + b, 0) / arrWaterLevel.length).toFixed(2))
                 document.getElementById('averageWaterLevel').innerText = averageWaterLevel
-                
+
                 let arrWaterTemperature = table.column(3).data()
-                let averageWaterTemperature = Number((arrWaterTemperature.reduce((a,b) => a + b, 0) / arrWaterTemperature.length).toFixed(2))
+                let averageWaterTemperature = Number((arrWaterTemperature.reduce((a, b) => a + b, 0) / arrWaterTemperature.length).toFixed(2))
                 document.getElementById('averageWaterTemperature').innerText = averageWaterTemperature
-                
-                
+
+
                 // */
                 //INI UNTUK FS (prob)
                 // uncomment block below to request data from fs >>
