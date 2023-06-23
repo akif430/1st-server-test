@@ -15,29 +15,28 @@ const { initData, loadData, saveData } = require('./filesystem.js')
 //nanti kena tukar sini lepas ukur Depth of river kat FKM 
 
 
-//water level hit alert if more than 0.5
-const TrueWaterLevelAlert = 0.5;
+//water level hit alert if more than 1.0
+const TrueWaterLevelAlert = 1.0;
 
-//water level hit warning if more than 1.0
-const TrueWaterLevelWarning = 1.0;
+//water level hit warning if more than 1.5
+const TrueWaterLevelWarning = 1.5;
 
-//water level hit danger if more than 1.5
-const TrueWaterLevelDanger = 1.5;
+//water level hit danger if more than 2.0
+const TrueWaterLevelDanger = 2.0;
 
 //Determine the River Depth (Make Measurement)
-const RiverDepth = 0.3;
+const RiverDepth = 2.0;
 
 //Determine the Height of sensor above River Bank 
-const SensorDistFromRiverBank = 1.0;
+const SensorDistFromRiverBank = 0.4;
 
 //Formula 
 //  TruewaterLevel = RiverDepth + WaterLevel (fromsensor) - SensorDistFromRiverBank 
 
 
 
-
 const WaterTemperatureWarningCold = 10;
-const WaterTemperatureWarningHot = 40;
+const WaterTemperatureWarningHot = 30;
 
 //process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 // https://vast-blue-starfish-cap.cyclic.app/
@@ -73,7 +72,7 @@ app.post('/save', async (req, res) => {
         return
     }
     //condition statement
-    let TrueWaterLevel = RiverDepth + Number(req.body.WaterLevel) - SensorDistFromRiverBank
+    let TrueWaterLevel = RiverDepth + SensorDistFromRiverBank - Number(req.body.WaterLevel)
 
     let condition
     if (TrueWaterLevel < TrueWaterLevelAlert) {
