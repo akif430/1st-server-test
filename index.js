@@ -108,15 +108,15 @@ app.post('/saveTemperature', async (req, res) => {
         });
         return
     }
-
+    let waterTemperature = Number(req.body.waterTemperature)
     let condition = 'danger'
-    if (req.body.waterTemperature > WaterTemperatureWarningCold && req.body.waterTemperature < WaterTemperatureWarningHot) {
+    if (waterTemperature > WaterTemperatureWarningCold && waterTemperature < WaterTemperatureWarningHot) {
         condition = 'normal'
     }
 
     const date = moment().tz('Asia/Kuala_Lumpur').format('YYYY / MM / DD, HH:mm:ss');
     let result = await wtemp.set(date, {
-        waterTemperature: Number(req.body.waterTemperature.toFixed(2)),
+        waterTemperature: Number(waterTemperature.toFixed(2)),
         condition
     })
     res.status(200).json({
