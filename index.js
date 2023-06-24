@@ -36,7 +36,7 @@ const SensorDistFromRiverBank = 0.4;
 
 
 const WaterTemperatureWarningCold = 10;
-const WaterTemperatureWarningHot = 30;
+const WaterTemperatureWarningHot = 35;
 
 //process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 // https://vast-blue-starfish-cap.cyclic.app/
