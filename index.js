@@ -28,7 +28,7 @@ const TrueWaterLevelDanger = 2.0;
 const RiverDepth = 2.0;
 
 //Determine the Height of sensor above River Bank 
-const SensorDistFromRiverBank = 1.20;
+const SensorDistFromRiverBank = 1.00;
 
 //Formula 
 //  TruewaterLevel = RiverDepth + WaterLevel (fromsensor) - SensorDistFromRiverBank 
