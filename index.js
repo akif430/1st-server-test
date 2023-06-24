@@ -65,14 +65,14 @@ app.post('/savefs', async (req, res) => {
 })
 
 app.post('/save', async (req, res) => {
-    if (req.body === undefined || req.body === {} || !req.body.WaterLevel || isNaN(req.body.WaterLevel)) {
+    if (req.body === undefined || req.body === {} || !req.body.waterLevel || isNaN(req.body.waterLevel)) {
         res.status(400).json({
-            status: 'request body is either undefined, empty, does not have `WaterLevel` key or not a number.'
+            status: 'request body is either undefined, empty, does not have `waterLevel` key or not a number.'
         });
         return
     }
     //condition statement
-    let TrueWaterLevel = RiverDepth + SensorDistFromRiverBank - Number(req.body.WaterLevel)
+    let TrueWaterLevel = RiverDepth + SensorDistFromRiverBank - Number(req.body.waterLevel)
 
     let condition
     if (TrueWaterLevel < TrueWaterLevelAlert) {
